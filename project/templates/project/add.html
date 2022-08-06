@@ -1,0 +1,31 @@
+{% extends "project/base.html" %}
+
+{% block title %} add Quest {% endblock %}
+
+{% block content %}
+    {%if user.is_authenticated %}
+        <form class="bg-light p-5 m-5" action="{% url 'add_quest' %}" method="POST">
+            {% csrf_token %}
+            <p class="mb-3">
+                <label for="question_title" class="form-label">Заголовок опроса</label>
+                <input type="text" class="form-control" id="question_title" name="question_title" required autocomplete="off">
+            </p>
+            <p class="mb-3">
+                <label for="question_text" class="form-label">Описание опроса</label>
+                <input type="text" class="form-control" id="question_text" name="question_text" required autocomplete="off">
+            </p>
+            <p>
+                <label for="choice_1">Вариант ответа: </label>
+                <input class="form-control w-25 d-inline" id="choice_1" name="choice" required autocomplete="off">
+            </p>
+            <p>
+                <label for="choice_2">Вариант ответа: </label>
+                <input class="form-control w-25 d-inline" id="choice_2" name="choice" required autocomplete="off">
+            </p>
+            <button class="btn btn-secondary" id="addQuest" type="button">Добавить вариант</button>
+            <button class="btn btn-dark " type="submit">Опобликовать</button>
+        </form>
+    {% else %}
+        <h1 class="text-light mt-5">Необходимо авторизоваться или зарегистрироваться</h1>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "project/base.html" %}
+
+{% block title %} Details {% endblock %}
+
+{% block content %}
+    <form class="card bg-light p-5 m-5" action="{% url 'vote' question.id %}" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ question.question_text }}</h1></legend>
+            {% if error_message %}
+            <p class="text-danger">
+                <strong>{{ error_message }}</strong>
+            </p>
+            {% endif %}
+            {% for choice in question.choice_set.all %}
+                <div class="mb-3">
+                    <input type="radio" name="choice" id="choice {{ choice.id }}" value="{{ choice.id }}">
+                    <label for="choice {{ choice.id }}" class="form-label">{{ choice.choice_text }}</label>
+                </div>
+            {% endfor %}
+        </fieldset>
+        <div class="d-flex justify-content-between">
+            <button disabled id="vote-btn" type="submit" class="btn btn-secondary">Голосовать</button>
+            {% if user == question.question_author and question.total_votes < 1 %}
+                <button type="button" name="btn-modal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-dark">Удалить</button>
+            {% endif %}
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Удаление опроса</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Вы уверены что хотите удалить данный опрос?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+                  <button type="submit" name="delete-btn" class="btn btn-dark">Да, удалить</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "project/base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+    <form class="card bg-light p-5 m-5" method="POST">
+        {% csrf_token %}
+        <legend><h2>Введите логин и пароль</h2></legend>
+        {{ form.as_p }}
+        <div>
+            <button class="btn btn-dark" type="submit">Войти</button>
+        </div>
+        <p class="muted mt-4">
+            <a data-bs-toggle="tooltip" title="Да" href="{% url 'signup' %}">Первый раз?</a>
+        </p>
+    </form>
+{% endblock %}

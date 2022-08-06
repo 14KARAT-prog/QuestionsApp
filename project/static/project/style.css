@@ -1,0 +1,22 @@
+body {
+    background: url("images/old-black-back.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+nav {
+    transition: 1s;
+}
+
+.nav_hidden {
+    transform: translateY(-100%);
+}
+
+.btn-dark {
+    transition: opacity .5s ease;
+}
+
+.btn-dark:hover {
+    opacity: .7;
+}
+

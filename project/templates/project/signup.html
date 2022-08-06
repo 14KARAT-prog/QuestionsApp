@@ -1,0 +1,14 @@
+{% extends 'project/base.html' %}
+ 
+{% block title %} Login {% endblock %}
+
+{% block content %}
+    <form class="card bg-light p-5 m-5" method="POST">
+        {% csrf_token %}
+        <legend><h2>Регистрация</h2></legend>
+        {{ form.as_p }}
+        <div>
+            <button class="btn btn-dark" type="submit">Зарегистрироваться</button>
+        </div>
+    </form>
+{% endblock content %}

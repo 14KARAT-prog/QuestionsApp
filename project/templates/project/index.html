@@ -1,0 +1,59 @@
+{% extends "project/base.html" %}
+
+{% block title %} Quest {% endblock %}
+
+
+{% block content %}
+    {% if latest_question_list %}    
+        {% for question in latest_question_list %}
+        <div class="card text-center mt-4">
+            <div class="card-header bg-secondary text-light">
+                Опрос
+            </div>
+            <div class="card-body">
+                    <h5 class="card-title">{{ question.question_title }}</h5>
+                    <p class="card-text">{{ question.question_text }}</p>
+                    <p class="card-text">Проголосовали: <strong>{{ question.total_votes }}</strong></p>
+                    <a href="{% url 'detail' question.id %}" class="btn btn-secondary">Перейти</a>
+            </div>
+            <div class="card-footer text-muted">
+                {{ question.pub_date }}
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Пагинация -->
+        <nav class="mt-4" aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if page_obj.paginator.num_pages <= 5 %}
+                    {% for page in page_obj.paginator.page_range %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
+                {% else %}
+                    {% if page_obj.number != 1 %}
+                        <li class="page-item"><a class="page-link" href="?page=1">1</a></li></li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link active" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li></li>
+                    {% if page_obj.number != page_obj.paginator.num_pages %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages}}">{{ page_obj.paginator.num_pages }}</a></li></li>
+                    {% endif %}
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+          </nav>
+          <!-- Конец пагинации -->
+    {% endif %}
+{% endblock %}
